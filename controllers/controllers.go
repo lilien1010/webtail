@@ -4,18 +4,18 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"html/template"
-	"net/http"
-	"os"
-	"path/filepath"
-	"strings"
-
 	ctx "github.com/gorilla/context"
 	"github.com/gorilla/csrf"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
 	"github.com/gorilla/websocket"
 	"github.com/prateeknischal/webtail/util"
+	"html/template"
+	"log"
+	"net/http"
+	"os"
+	"path/filepath"
+	"strings"
 )
 
 var (
@@ -25,10 +25,18 @@ var (
 	}
 )
 
+func GetCurrentDirectory() string {
+	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	if err != nil {
+		log.Fatal(err)
+	}
+	return strings.Replace(dir, "\\", "/", -1)
+}
+
 // RootHandler - http handler for handling / path
 func RootHandler(w http.ResponseWriter, r *http.Request) {
 	t := template.New("index").Delims("<<", ">>")
-	t, err := t.ParseFiles("templates/index.tmpl")
+	t, err := t.ParseFiles(GetCurrentDirectory() + "/templates/index.tmpl")
 	t = template.Must(t, err)
 	if err != nil {
 		panic(err)
@@ -103,7 +111,7 @@ func LoginPageHandler(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/", 302)
 	}
 	t := template.New("login").Delims("<<", ">>")
-	t, err := t.ParseFiles("templates/login.tmpl")
+	t, err := t.ParseFiles(GetCurrentDirectory() + "templates/login.tmpl")
 	t = template.Must(t, err)
 	if err != nil {
 		panic(err)

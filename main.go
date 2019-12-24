@@ -12,7 +12,6 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/prateeknischal/webtail/controllers"
 	"github.com/prateeknischal/webtail/util"
-	ini "gopkg.in/ini.v1"
 )
 
 var (
@@ -44,7 +43,7 @@ func main() {
 	router.HandleFunc("/login", Use(controllers.LoginPageHandler, controllers.GetContext)).Methods("GET")
 	router.HandleFunc("/logout", Use(controllers.LogoutHandler, controllers.AuthHandler, controllers.GetContext)).Methods("POST")
 	router.HandleFunc("/user", Use(controllers.UserDetails, controllers.AuthHandler, controllers.GetContext))
-	router.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
+	router.PathPrefix("/").Handler(http.FileServer(http.Dir(controllers.GetCurrentDirectory() + "/static/")))
 
 	csrfHandler := csrf.Protect([]byte(util.GenerateSecureKey()),
 		csrf.Secure(false), csrf.CookieName("X-CSRF-Token"))
