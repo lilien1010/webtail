@@ -40,8 +40,18 @@
               </md-option>
             </md-select>
           </md-input-container>
+
+
+        <md-input-container>
+          <label>keywords(空格表示多个关键字高亮)</label>
+          <input type="text" ng-model="keyWords" required="" md-maxlength="100">
+        </md-input-container>
+
+
         </md-content>
         <md-content flex  class="md-padding" id="container"style="font-size:{{currSize}}">
+
+
           <!-- Content will be inserted by websocket connection -->
         </md-content>
         <md-content class="md-padding">
@@ -86,7 +96,7 @@
             <md-list>
               <<range .FileList>>
               <md-list-item class="md-3-line" id="filelist" ng-click="open_connection('<<.>>')">
-                <div class="md-list-item-text">
+                <div class="md-list-item-text file-name">
                   <<.>>
                 </div>
               </md-list-item>
@@ -114,6 +124,14 @@
     }
     md-sidenav, md-backdrop,  {
     position: fixed !important;
+    }
+
+    .md-sidenav-left {
+      width:620px;
+    }
+
+    .file-name {
+      word-break: break-word;
     }
   </style>
 </html>

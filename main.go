@@ -12,6 +12,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/prateeknischal/webtail/controllers"
 	"github.com/prateeknischal/webtail/util"
+	ini "gopkg.in/ini.v1"
 )
 
 var (
@@ -23,6 +24,8 @@ var (
 	secure   = kingpin.Flag("secure", "Run Server with TLS").Short('s').Bool()
 	cert     = kingpin.Flag("cert", "Server Certificate").Short('c').Default("server.crt").String()
 	key      = kingpin.Flag("key", "Server Key File").Short('k').Default("server.key").String()
+
+	confFile = kingpin.Flag("conf", "Configration file").Short('l').Default("webtail.conf").String()
 )
 
 func main() {
